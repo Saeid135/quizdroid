@@ -19,7 +19,6 @@ class Question2 : ComponentActivity() {
     private lateinit var result : TextView
     private lateinit var btn : Button
     private lateinit var next : Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question1)
@@ -34,9 +33,6 @@ class Question2 : ComponentActivity() {
         option2 = findViewById(R.id.option2)
         option3 = findViewById(R.id.option3)
         option4 = findViewById(R.id.option4)
-//        val chosenBtn = radioGrp.checkedRadioButtonId
-//        radioBtn = findViewById<RadioButton>(chosenBtn)
-//        Log.i("tag", radioBtn.toString())
         radioGrp.setOnCheckedChangeListener { group, checkedId ->
             btn.isEnabled = true
         }
