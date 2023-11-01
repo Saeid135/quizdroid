@@ -38,7 +38,9 @@ class Question1 : ComponentActivity() {
 //        radioBtn = findViewById<RadioButton>(chosenBtn)
 //        Log.i("tag", radioBtn.toString())
         radioGrp.setOnCheckedChangeListener { group, checkedId ->
-            btn.isEnabled = true
+            if (next.visibility == View.INVISIBLE) {
+                btn.isEnabled = true
+            }
         }
         if (topicQues == "Math") {
             txt.text = "Q1: What is 1 + 1?"
@@ -120,7 +122,6 @@ class Question1 : ComponentActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        // Start the intent
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }

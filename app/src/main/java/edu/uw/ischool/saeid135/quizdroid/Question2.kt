@@ -19,11 +19,17 @@ class Question2 : ComponentActivity() {
     private lateinit var result : TextView
     private lateinit var btn : Button
     private lateinit var next : Button
+    private var topicQues : String? = ""
+    private var count: Int = 0
+    private var initialCount: Int = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question1)
-        val topicQues = intent.getStringExtra("chosenTopic")
-        var count = intent.getIntExtra("countValue", 0)
+        topicQues = intent.getStringExtra("chosenTopic")
+        count = intent.getIntExtra("countValue", 0)
+        initialCount = count
         radioGrp = findViewById<RadioGroup>(R.id.radio_group)
         btn = findViewById(R.id.btn)
         next = findViewById(R.id.next)
@@ -34,7 +40,9 @@ class Question2 : ComponentActivity() {
         option3 = findViewById(R.id.option3)
         option4 = findViewById(R.id.option4)
         radioGrp.setOnCheckedChangeListener { group, checkedId ->
-            btn.isEnabled = true
+            if (next.visibility == View.INVISIBLE) {
+                btn.isEnabled = true
+            }
         }
         if (topicQues == "Math") {
             txt.text = "Q2: What is the square root of 121?"
@@ -112,5 +120,13 @@ class Question2 : ComponentActivity() {
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, Question1::class.java)
+        intent.putExtra("chosenTopic", topicQues)
+        intent.putExtra("countValue", initialCount - 1)
+        startActivity(intent)
     }
 }
