@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import java.io.Serializable
 
 
 data class Quiz(val questionTxt: String, val ans1: String,
@@ -88,7 +89,7 @@ class QuizApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        Log.i("QuizApp", "onCreate()")
         quizRepository = TopicRepoValues(this)
     }
 }
@@ -108,7 +109,6 @@ class MainActivity : ComponentActivity() {
         val finalQuiz = (application as QuizApplication)
         val repository = finalQuiz.quizRepository
         allTopics = repository.getAll()
-        Log.i("QuizApp", "onCreate()")
         listView = findViewById(R.id.listView)
         val adapter = ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_1, android.R.id.text1, topics)
