@@ -8,6 +8,8 @@ import android.content.Intent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Question2 : ComponentActivity() {
     private lateinit var radioGrp : RadioGroup
@@ -22,12 +24,17 @@ class Question2 : ComponentActivity() {
     private var topicQues : String? = ""
     private var count: Int = 0
     private var initialCount: Int = 0
+    private var json : String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question1)
         topicQues = intent.getStringExtra("chosenTopic")
+        json = intent.getStringExtra("topicsList")
+        val gson = Gson()
+        val type = object : TypeToken<List<Topic>>() {}.type
+        val topicsList : List<Topic> = gson.fromJson(json, type)
         count = intent.getIntExtra("countValue", 0)
         initialCount = count
         radioGrp = findViewById<RadioGroup>(R.id.radio_group)
@@ -45,11 +52,11 @@ class Question2 : ComponentActivity() {
             }
         }
         if (topicQues == "Math") {
-            txt.text = "Q2: What is the square root of 121?"
-            option1.text = "9"
-            option2.text = "7"
-            option3.text = "32"
-            option4.text = "11"
+            txt.text = topicsList[0].questions[1].questionTxt
+            option1.text = topicsList[0].questions[1].ans1
+            option2.text = topicsList[0].questions[1].ans2
+            option3.text = topicsList[0].questions[1].ans3
+            option4.text = topicsList[0].questions[1].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -65,16 +72,17 @@ class Question2 : ComponentActivity() {
                     val intent = Intent(this, Question3::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
         }
         else if (topicQues == "Physics") {
-            txt.text = "Q2: Which electromagnetic radiation transmits the highest photon energy?"
-            option1.text = "Radio waves"
-            option2.text = "Gamma rays"
-            option3.text = "Microwaves"
-            option4.text = "Infrared"
+            txt.text = topicsList[1].questions[1].questionTxt
+            option1.text = topicsList[1].questions[1].ans1
+            option2.text = topicsList[1].questions[1].ans2
+            option3.text = topicsList[1].questions[1].ans3
+            option4.text = topicsList[1].questions[1].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -90,16 +98,17 @@ class Question2 : ComponentActivity() {
                     val intent = Intent(this, Question3::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
         }
         else if (topicQues == "Marvel Super Heroes") {
-            txt.text = "Q2: Who has Spider Sense?"
-            option1.text = "Black Panther"
-            option2.text = "Antman"
-            option3.text = "Spiderman"
-            option4.text = "Falcon"
+            txt.text = topicsList[2].questions[1].questionTxt
+            option1.text = topicsList[2].questions[1].ans1
+            option2.text = topicsList[2].questions[1].ans2
+            option3.text = topicsList[2].questions[1].ans3
+            option4.text = topicsList[2].questions[1].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -115,6 +124,7 @@ class Question2 : ComponentActivity() {
                     val intent = Intent(this, Question3::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
@@ -127,6 +137,7 @@ class Question2 : ComponentActivity() {
         val intent = Intent(this, Question1::class.java)
         intent.putExtra("chosenTopic", topicQues)
         intent.putExtra("countValue", initialCount - 1)
+        intent.putExtra("topicsList", json)
         startActivity(intent)
     }
 }

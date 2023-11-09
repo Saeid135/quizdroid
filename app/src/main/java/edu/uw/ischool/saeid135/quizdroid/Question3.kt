@@ -1,13 +1,15 @@
 package edu.uw.ischool.saeid135.quizdroid
 
-import android.os.Bundle
 import androidx.activity.ComponentActivity
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.content.Intent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Question3 : ComponentActivity() {
     private lateinit var radioGrp : RadioGroup
@@ -22,12 +24,17 @@ class Question3 : ComponentActivity() {
     private var topicQues : String? = ""
     private var count: Int = 0
     private var initialCount: Int = 0
+    private var json : String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question1)
         topicQues = intent.getStringExtra("chosenTopic")
+        json = intent.getStringExtra("topicsList")
+        val gson = Gson()
+        val type = object : TypeToken<List<Topic>>() {}.type
+        val topicsList : List<Topic> = gson.fromJson(json, type)
         count = intent.getIntExtra("countValue", 0)
         initialCount = count
         radioGrp = findViewById<RadioGroup>(R.id.radio_group)
@@ -45,76 +52,79 @@ class Question3 : ComponentActivity() {
             }
         }
         if (topicQues == "Math") {
-            txt.text = "Q3: What is 10 times 10?"
-            option1.text = "97"
-            option2.text = "100"
-            option3.text = "5"
-            option4.text = "1000"
+            txt.text = topicsList[0].questions[2].questionTxt
+            option1.text = topicsList[0].questions[2].ans1
+            option2.text = topicsList[0].questions[2].ans2
+            option3.text = topicsList[0].questions[2].ans3
+            option4.text = topicsList[0].questions[2].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "100") {
+                if (answer == "11") {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is 100. You have ${count} out of 5 correct."
+                        " answer is 11. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {
                     val intent = Intent(this, Question4::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
         }
         else if (topicQues == "Physics") {
-            txt.text = "Q3: Which part of the eye has the greatest density of light receptors?"
-            option1.text = "Retina"
-            option2.text = "Iris"
-            option3.text = "Pupil"
-            option4.text = "Fovea"
+            txt.text = topicsList[1].questions[2].questionTxt
+            option1.text = topicsList[1].questions[2].ans1
+            option2.text = topicsList[1].questions[2].ans2
+            option3.text = topicsList[1].questions[2].ans3
+            option4.text = topicsList[1].questions[2].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "Fovea") {
+                if (answer == "Gamma rays") {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is Fovea. You have ${count} out of 5 correct."
+                        " answer is Gamma rays. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {
                     val intent = Intent(this, Question4::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
         }
         else if (topicQues == "Marvel Super Heroes") {
-            txt.text = "Q3: Which one of these villains is commonly associated with Wolverine?"
-            option1.text = "Yellow Jacket"
-            option2.text = "Magneto"
-            option3.text = "Venom"
-            option4.text = "Abomination"
+            txt.text = topicsList[2].questions[2].questionTxt
+            option1.text = topicsList[2].questions[2].ans1
+            option2.text = topicsList[2].questions[2].ans2
+            option3.text = topicsList[2].questions[2].ans3
+            option4.text = topicsList[2].questions[2].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "Magneto") {
+                if (answer == "Spiderman") {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is Magneto. You have ${count} out of 5 correct."
+                        " answer is Spiderman. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {
                     val intent = Intent(this, Question4::class.java)
                     intent.putExtra("chosenTopic", topicQues)
                     intent.putExtra("countValue", count)
+                    intent.putExtra("topicsList", json)
                     startActivity(intent)
                 }
             }
@@ -127,6 +137,7 @@ class Question3 : ComponentActivity() {
         val intent = Intent(this, Question2::class.java)
         intent.putExtra("chosenTopic", topicQues)
         intent.putExtra("countValue", initialCount - 1)
+        intent.putExtra("topicsList", json)
         startActivity(intent)
     }
 }

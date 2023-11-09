@@ -8,6 +8,8 @@ import android.content.Intent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Question5 : ComponentActivity() {
     private lateinit var radioGrp : RadioGroup
@@ -22,13 +24,17 @@ class Question5 : ComponentActivity() {
     private var topicQues : String? = ""
     private var count: Int = 0
     private var initialCount: Int = 0
-
+    private var json : String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question1)
         topicQues = intent.getStringExtra("chosenTopic")
         count = intent.getIntExtra("countValue", 0)
+        json = intent.getStringExtra("topicsList")
+        val gson = Gson()
+        val type = object : TypeToken<List<Topic>>() {}.type
+        val topicsList : List<Topic> = gson.fromJson(json, type)
         initialCount = count
         radioGrp = findViewById<RadioGroup>(R.id.radio_group)
         btn = findViewById(R.id.btn)
@@ -45,11 +51,11 @@ class Question5 : ComponentActivity() {
             }
         }
         if (topicQues == "Math") {
-            txt.text = "Q5: What is 10 divided by 5?"
-            option1.text = "5"
-            option2.text = "2"
-            option3.text = "98"
-            option4.text = "54"
+            txt.text = topicsList[0].questions[4].questionTxt
+            option1.text = topicsList[0].questions[4].ans1
+            option2.text = topicsList[0].questions[4].ans2
+            option3.text = topicsList[0].questions[4].ans3
+            option4.text = topicsList[0].questions[4].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -69,12 +75,11 @@ class Question5 : ComponentActivity() {
             }
         }
         else if (topicQues == "Physics") {
-            txt.text = "Q5: What is the term for the minimum angle at which a light ray is reflected" +
-                    " back into a material and cannot pass into the surrounding medium?"
-            option1.text = "Awkward Angle"
-            option2.text = "Critical Angle"
-            option3.text = "Final Angle"
-            option4.text = "Angle of No Return"
+            txt.text = topicsList[1].questions[4].questionTxt
+            option1.text = topicsList[1].questions[4].ans1
+            option2.text = topicsList[1].questions[4].ans2
+            option3.text = topicsList[1].questions[4].ans3
+            option4.text = topicsList[1].questions[4].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -94,11 +99,11 @@ class Question5 : ComponentActivity() {
             }
         }
         else if (topicQues == "Marvel Super Heroes") {
-            txt.text = "Q5: How did the Hulk gain his powers?"
-            option1.text = "Gamma Ray Exposure"
-            option2.text = "Working out"
-            option3.text = "Super Soldier Serum"
-            option4.text = "None of the above"
+            txt.text = topicsList[2].questions[4].questionTxt
+            option1.text = topicsList[2].questions[4].ans1
+            option2.text = topicsList[2].questions[4].ans2
+            option3.text = topicsList[2].questions[4].ans3
+            option4.text = topicsList[2].questions[4].ans4
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)

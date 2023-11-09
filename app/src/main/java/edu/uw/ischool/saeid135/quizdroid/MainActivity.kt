@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.google.gson.Gson
 import java.io.Serializable
 
 
@@ -94,12 +95,6 @@ class QuizApplication : Application() {
     }
 }
 
-val topics = arrayOf(
-    "Math",
-    "Physics",
-    "Marvel Super Heroes"
-)
-
 class MainActivity : ComponentActivity() {
     lateinit var listView : ListView
     var allTopics: List<Topic> = mutableListOf()
@@ -110,12 +105,16 @@ class MainActivity : ComponentActivity() {
         val repository = finalQuiz.quizRepository
         allTopics = repository.getAll()
         listView = findViewById(R.id.listView)
+        val newTopics = allTopics.map {it.title}
         val adapter = ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_1, android.R.id.text1, topics)
+            android.R.layout.simple_list_item_1, android.R.id.text1, newTopics)
         listView.adapter = adapter
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("chosenTopic", topics[position])
+            intent.putExtra("chosenTopic", newTopics[position])
+            val gson = Gson()
+            val json = gson.toJson(allTopics)
+            intent.putExtra("topicsList", json)
             startActivity(intent)
         }
 
