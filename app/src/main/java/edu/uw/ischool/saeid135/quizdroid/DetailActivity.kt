@@ -19,12 +19,15 @@ class DetailActivity : ComponentActivity() {
         val topicDesc = intent.getStringExtra("chosenTopic")
         val json = intent.getStringExtra("topicsList")
         val gson = Gson()
+        if (json != null) {
+            Log.i("Read This", json)
+        }
         val type = object : TypeToken<List<Topic>>() {}.type
         val topicsList : List<Topic> = gson.fromJson(json, type)
         btn = findViewById(R.id.btn)
         txt = findViewById(R.id.txt)
-        if (topicDesc == "Math") {
-            txt.text = topicsList[0].longDesc
+        if (topicDesc == topicsList[0].title) {
+            txt.text = topicsList[0].desc
             btn.setOnClickListener {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)
@@ -32,8 +35,8 @@ class DetailActivity : ComponentActivity() {
                 startActivity(intent)
             }
         }
-        else if (topicDesc == "Physics") {
-            txt.text = topicsList[1].longDesc
+        else if (topicDesc == topicsList[1].title) {
+            txt.text = topicsList[1].desc
             btn.setOnClickListener {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)
@@ -41,8 +44,8 @@ class DetailActivity : ComponentActivity() {
                 startActivity(intent)
             }
         }
-        else if (topicDesc == "Marvel Super Heroes") {
-            txt.text = topicsList[2].longDesc
+        else if (topicDesc == topicsList[2].title) {
+            txt.text = topicsList[2].desc
             btn.setOnClickListener {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)

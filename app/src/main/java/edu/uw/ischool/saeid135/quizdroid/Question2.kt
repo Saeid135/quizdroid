@@ -51,21 +51,23 @@ class Question2 : ComponentActivity() {
                 btn.isEnabled = true
             }
         }
-        if (topicQues == "Math") {
-            txt.text = topicsList[0].questions[1].questionTxt
-            option1.text = topicsList[0].questions[1].ans1
-            option2.text = topicsList[0].questions[1].ans2
-            option3.text = topicsList[0].questions[1].ans3
-            option4.text = topicsList[0].questions[1].ans4
+        if (topicQues == topicsList[0].title) {
+            txt.text = topicsList[0].questions[1].text
+            option1.text = topicsList[0].questions[1].answers[0]
+            option2.text = topicsList[0].questions[1].answers[1]
+            option3.text = topicsList[0].questions[1].answers[2]
+            option4.text = topicsList[0].questions[1].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "11") {
+                val choseAns = topicsList[0].questions[1].answer
+                val realAns = topicsList[0].questions[1].answers[choseAns - 1]
+                if (answer == realAns) {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is 11. You have ${count} out of 5 correct."
+                        " answer is ${realAns}. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {
@@ -77,21 +79,23 @@ class Question2 : ComponentActivity() {
                 }
             }
         }
-        else if (topicQues == "Physics") {
-            txt.text = topicsList[1].questions[1].questionTxt
-            option1.text = topicsList[1].questions[1].ans1
-            option2.text = topicsList[1].questions[1].ans2
-            option3.text = topicsList[1].questions[1].ans3
-            option4.text = topicsList[1].questions[1].ans4
+        else if (topicQues == topicsList[1].title) {
+            txt.text = topicsList[1].questions[1].text
+            option1.text = topicsList[1].questions[1].answers[0]
+            option2.text = topicsList[1].questions[1].answers[1]
+            option3.text = topicsList[1].questions[1].answers[2]
+            option4.text = topicsList[1].questions[1].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "Gamma rays") {
+                val choseAns = topicsList[1].questions[1].answer
+                val realAns = topicsList[1].questions[1].answers[choseAns - 1]
+                if (answer == realAns) {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is Gamma rays. You have ${count} out of 5 correct."
+                        " answer is ${realAns}. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {
@@ -103,21 +107,23 @@ class Question2 : ComponentActivity() {
                 }
             }
         }
-        else if (topicQues == "Marvel Super Heroes") {
-            txt.text = topicsList[2].questions[1].questionTxt
-            option1.text = topicsList[2].questions[1].ans1
-            option2.text = topicsList[2].questions[1].ans2
-            option3.text = topicsList[2].questions[1].ans3
-            option4.text = topicsList[2].questions[1].ans4
+        else if (topicQues == topicsList[2].title) {
+            txt.text = topicsList[2].questions[1].text
+            option1.text = topicsList[2].questions[1].answers[0]
+            option2.text = topicsList[2].questions[1].answers[1]
+            option3.text = topicsList[2].questions[1].answers[2]
+            option4.text = topicsList[2].questions[1].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
                 val answer = pickedAns.text.toString()
-                if (answer == "Spiderman") {
+                val choseAns = topicsList[2].questions[1].answer
+                val realAns = topicsList[2].questions[1].answers[choseAns - 1]
+                if (answer == realAns) {
                     count += 1
                 }
                 result.text = "The answer you gave is ${answer}. The correct" +
-                        " answer is Spiderman. You have ${count} out of 5 correct."
+                        " answer is ${realAns}. You have ${count} out of 5 correct."
                 btn.isEnabled = false
                 next.visibility = View.VISIBLE
                 next.setOnClickListener {

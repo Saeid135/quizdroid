@@ -51,12 +51,12 @@ class Question3 : ComponentActivity() {
                 btn.isEnabled = true
             }
         }
-        if (topicQues == "Math") {
-            txt.text = topicsList[0].questions[2].questionTxt
-            option1.text = topicsList[0].questions[2].ans1
-            option2.text = topicsList[0].questions[2].ans2
-            option3.text = topicsList[0].questions[2].ans3
-            option4.text = topicsList[0].questions[2].ans4
+        if (topicQues == topicsList[0].title) {
+            txt.text = topicsList[0].questions[2].text
+            option1.text = topicsList[0].questions[2].answers[0]
+            option2.text = topicsList[0].questions[2].answers[1]
+            option3.text = topicsList[0].questions[2].answers[2]
+            option4.text = topicsList[0].questions[2].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -77,12 +77,12 @@ class Question3 : ComponentActivity() {
                 }
             }
         }
-        else if (topicQues == "Physics") {
-            txt.text = topicsList[1].questions[2].questionTxt
-            option1.text = topicsList[1].questions[2].ans1
-            option2.text = topicsList[1].questions[2].ans2
-            option3.text = topicsList[1].questions[2].ans3
-            option4.text = topicsList[1].questions[2].ans4
+        else if (topicQues == topicsList[1].title) {
+            txt.text = topicsList[1].questions[2].text
+            option1.text = topicsList[1].questions[2].answers[0]
+            option2.text = topicsList[1].questions[2].answers[1]
+            option3.text = topicsList[1].questions[2].answers[2]
+            option4.text = topicsList[1].questions[2].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)
@@ -103,12 +103,12 @@ class Question3 : ComponentActivity() {
                 }
             }
         }
-        else if (topicQues == "Marvel Super Heroes") {
-            txt.text = topicsList[2].questions[2].questionTxt
-            option1.text = topicsList[2].questions[2].ans1
-            option2.text = topicsList[2].questions[2].ans2
-            option3.text = topicsList[2].questions[2].ans3
-            option4.text = topicsList[2].questions[2].ans4
+        else if (topicQues == topicsList[2].title) {
+            txt.text = topicsList[2].questions[2].text
+            option1.text = topicsList[2].questions[2].answers[0]
+            option2.text = topicsList[2].questions[2].answers[1]
+            option3.text = topicsList[2].questions[2].answers[2]
+            option4.text = topicsList[2].questions[2].answers[3]
             btn.setOnClickListener{
                 val chosenBtn = radioGrp.checkedRadioButtonId
                 val pickedAns = findViewById<RadioButton>(chosenBtn)

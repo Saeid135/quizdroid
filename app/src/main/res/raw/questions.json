@@ -1,0 +1,170 @@
+[
+  {
+    "desc": "This is a quiz about the topic of Mathematics. This is a topic that consists of, in simple terms,  the study of numbers, patterns, and relationships. This quiz will have five questions.",
+    "questions": [
+      {
+        "answer": 2,
+        "answers": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "text": "Q1: What is 1 + 1?"
+      },
+      {
+        "answer": 4,
+        "answers": [
+          "9",
+          "7",
+          "32",
+          "11"
+        ],
+        "text": "Q2: What is the square root of 121?"
+      },
+      {
+        "answer": 2,
+        "answers": [
+          "97",
+          "100",
+          "5",
+          "1000"
+        ],
+        "text": "Q3: What is 10 times 10?"
+      },
+      {
+        "answer": 3,
+        "answers": [
+          "8",
+          "30",
+          "32",
+          "24"
+        ],
+        "text": "Q4: What is 37 - 5?"
+      },
+      {
+        "answer": 2,
+        "answers": [
+          "5",
+          "2",
+          "98",
+          "54"
+        ],
+        "text": "Q5: What is 10 divided by 5?"
+      }
+    ],
+    "title": "Math"
+  },
+  {
+    "desc": "This is a quiz about Physics. It asks some questions that fall into the vast topic of Physics, a branch of science that delves into the study of matter, motion, and energy. This quiz will have five questions.",
+    "questions": [
+      {
+        "answer": 1,
+        "answers": [
+          "Newtons (N)",
+          "Electrons",
+          "Inches",
+          "Centimeters"
+        ],
+        "text": "Q1: What is the SI unit of force?"
+      },
+      {
+        "answer": 2,
+        "answers": [
+          "Radio waves",
+          "Gamma rays",
+          "Microwaves",
+          "Infrared"
+        ],
+        "text": "Q2: Which electromagnetic radiation transmits the highest photon energy?"
+      },
+      {
+        "answer": 4,
+        "answers": [
+          "Retina",
+          "Iris",
+          "Pupil",
+          "Fovea"
+        ],
+        "text": "Q3: Which part of the eye has the greatest density of light receptors?"
+      },
+      {
+        "answer": 3,
+        "answers": [
+          "Mighty Astonishment",
+          "Medical Advantage",
+          "Mechanical Advantage",
+          "Motor Advancement"
+        ],
+        "text": "Q4: What does the term \"IMA\" stand for in the context of simple machines?"
+      },
+      {
+        "answer": 2,
+        "answers": [
+          "Awkward Angle",
+          "Critical Angle",
+          "Final Angle",
+          "Angle of No Return"
+        ],
+        "text": "Q5: What is the term for the minimum angle at which a light ray is reflected back into a material and cannot pass into the surrounding medium?"
+      }
+    ],
+    "title": "Physics"
+  },
+  {
+    "desc": "This is a quiz about Physics. It asks some questions that falldata into the vast topic of Physics, a branch of science that delves into the study of matter, motion, and energy. This quiz will have five questions.",
+    "questions": [
+      {
+        "answer": 1,
+        "answers": [
+          "Wolverine",
+          "Spiderman",
+          "Iron Man",
+          "The Hulk"
+        ],
+        "text": "Q1: Who is a part of the X-men?"
+      },
+      {
+        "answer": 3,
+        "answers": [
+          "Black Panther",
+          "Antman",
+          "Spiderman",
+          "Falcon"
+        ],
+        "text": "Q2: Who has Spider Sense?"
+      },
+      {
+        "answer": 2,
+        "answers": [
+          "Yellow Jacket",
+          "Magneto",
+          "Venom",
+          "Abomination"
+        ],
+        "text": "Q3: Which one of these villains is commonly associated with Wolverine?"
+      },
+      {
+        "answer": 1,
+        "answers": [
+          "Queens",
+          "Brooklyn",
+          "Manhattan",
+          "None of the above"
+        ],
+        "text": "Q4: Which Borough does Spiderman originate from?"
+      },
+      {
+        "answer": 1,
+        "answers": [
+          "Gamma Ray Exposure",
+          "Working out",
+          "Super Soldier Serum",
+          "None of the above"
+        ],
+        "text": "Q5: How did the Hulk gain his powers?"
+      }
+    ],
+    "title": "Marvel Super Heroes"
+  }
+]
