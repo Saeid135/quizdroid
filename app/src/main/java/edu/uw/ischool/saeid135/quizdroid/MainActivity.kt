@@ -1,5 +1,6 @@
 package edu.uw.ischool.saeid135.quizdroid
 
+import android.app.AlarmManager
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,15 +10,26 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import android.app.Application
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.IntentFilter
+import android.telephony.SmsManager
 import android.util.Log
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.File
+import java.io.InputStreamReader
 import java.io.Serializable
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
+const val ALARM_ACTION = "edu.uw.ischool.saeid135.ALARM"
 
 data class Quiz(val text: String,
                 val answers: Array<String>,
@@ -51,14 +63,18 @@ class QuizApplication : Application() {
 }
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
+    var receiver : BroadcastReceiver? = null
     lateinit var listView : ListView
     var allTopics: List<Topic> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        downloadAlarm()
 //        val toolbar: Toolbar = findViewById(R.id.toolbar)
 //        setActionBar(toolbar)
-
+        Log.i("File path", getExternalFilesDir(null).toString())
         val finalQuiz = (application as QuizApplication)
         val repository = finalQuiz.quizRepository
         allTopics = repository.getAll()
@@ -79,6 +95,47 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun downloadAlarm() {
+        val activityThis = this
+
+        if (receiver == null) {
+            receiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    val executor : Executor = Executors.newSingleThreadExecutor()
+                    executor.execute {
+                        val url = URL("http", "tednewardsandbox.site44.com", 80, "/questions.json")
+                        val urlConnection = url.openConnection() as HttpURLConnection
+                        val inputStream = urlConnection.getInputStream()
+                        val reader = InputStreamReader(inputStream)
+                        reader.use {
+                            val text = it.readText()
+                            Log.v("MainActivity", text)
+
+                            activityThis.runOnUiThread {
+                                File("/storage/emulated/0/Android/data/edu.uw.ischool.saeid135.quizdroid/files/questions.json").writeText(text)
+                            }
+                        }
+                    }
+                }
+            }
+            val filter = IntentFilter(ALARM_ACTION)
+            registerReceiver(receiver, filter)
+        }
+
+        // Create the PendingIntent
+        val intent = Intent(ALARM_ACTION)
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        // Get the Alarm Manager
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis(),
+            60000,
+            pendingIntent)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return true
