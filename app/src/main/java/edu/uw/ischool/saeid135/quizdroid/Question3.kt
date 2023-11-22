@@ -8,10 +8,11 @@ import android.content.Intent
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class Question3 : ComponentActivity() {
+class Question3 : AppCompatActivity() {
     private lateinit var radioGrp : RadioGroup
     private lateinit var option1 : RadioButton
     private lateinit var option2 : RadioButton

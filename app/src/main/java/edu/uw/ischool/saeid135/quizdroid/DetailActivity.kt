@@ -8,9 +8,10 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 
 
-class DetailActivity : ComponentActivity() {
+class DetailActivity : AppCompatActivity() {
     private lateinit var btn : Button
     private lateinit var txt : TextView
     override fun onCreate(savedInstanceState: Bundle?) {

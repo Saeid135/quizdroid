@@ -5,10 +5,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.Serializable
@@ -45,16 +50,21 @@ class QuizApplication : Application() {
     }
 }
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     lateinit var listView : ListView
     var allTopics: List<Topic> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        setActionBar(toolbar)
+
         val finalQuiz = (application as QuizApplication)
         val repository = finalQuiz.quizRepository
         allTopics = repository.getAll()
         listView = findViewById(R.id.listView)
+        val filePath = this.filesDir.absolutePath
+        Log.i("Check files", filePath)
         val newTopics = allTopics.map {it.title}
         val adapter = ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_1, android.R.id.text1, newTopics)
@@ -68,5 +78,28 @@ class MainActivity : ComponentActivity() {
             startActivity(intent)
         }
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.url -> {
+                // Handle the settings action
+                Toast.makeText(this, "http://tednewardsandbox.site44.com/questions.json",
+                    Toast.LENGTH_SHORT).show()
+
+                true
+            }
+            R.id.time -> {
+                // Handle the other action
+                Toast.makeText(this, "Checking for downloads every 5 minutes",
+                    Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
