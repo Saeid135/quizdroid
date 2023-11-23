@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 class DetailActivity : AppCompatActivity() {
     private lateinit var btn : Button
     private lateinit var txt : TextView
+    private var addUp : Int = 0
+    private var count : Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -33,6 +36,8 @@ class DetailActivity : AppCompatActivity() {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)
                 intent.putExtra("topicsList", json)
+                intent.putExtra("addUp", addUp)
+                intent.putExtra("countValue", count)
                 startActivity(intent)
             }
         }
@@ -42,6 +47,8 @@ class DetailActivity : AppCompatActivity() {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)
                 intent.putExtra("topicsList", json)
+                intent.putExtra("addUp", addUp)
+                intent.putExtra("countValue", count)
                 startActivity(intent)
             }
         }
@@ -51,6 +58,8 @@ class DetailActivity : AppCompatActivity() {
                 val intent = Intent(this, Question1::class.java)
                 intent.putExtra("chosenTopic", topicDesc)
                 intent.putExtra("topicsList", json)
+                intent.putExtra("addUp", addUp)
+                intent.putExtra("countValue", count)
                 startActivity(intent)
             }
         }

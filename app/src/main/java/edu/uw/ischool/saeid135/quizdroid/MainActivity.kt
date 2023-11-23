@@ -2,6 +2,7 @@ package edu.uw.ischool.saeid135.quizdroid
 
 import android.app.AlarmManager
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -16,6 +17,7 @@ import android.content.Context
 import android.content.IntentFilter
 import android.telephony.SmsManager
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -54,11 +56,21 @@ class TopicRepoValues(val context : Context) : TopicRepository {
 
 class QuizApplication : Application() {
     lateinit var quizRepository : TopicRepository
+    lateinit var fileRepository : List<Topic>
 
     override fun onCreate() {
         super.onCreate()
         Log.i("QuizApp", "onCreate()")
-        quizRepository = TopicRepoValues(this)
+        val file = File(getExternalFilesDir(null).toString() + "/questions.json")
+        if (file.exists()) {
+            val gson = Gson()
+            val type = object : TypeToken<List<Topic>>() {}.type
+            val json = file.bufferedReader().use { it.readText() }
+            fileRepository = gson.fromJson(json, type)
+        }
+        else {
+            quizRepository = TopicRepoValues(this)
+        }
     }
 }
 
@@ -67,17 +79,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     var receiver : BroadcastReceiver? = null
     lateinit var listView : ListView
+    var newURL : String = "https://tednewardsandbox.site44.com/questions.json"
+    var newMinutes : Int = 1
+    var checkSet : Int = 0
     var allTopics: List<Topic> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (intent.hasExtra("newUrl")) {
+            newUrl = intent.getStringExtra("newUrl").toString()
+        }
+        if (intent.hasExtra("newTime")) {
+            newTime = intent.getIntExtra("newTime", 0)
+        }
         downloadAlarm()
 //        val toolbar: Toolbar = findViewById(R.id.toolbar)
 //        setActionBar(toolbar)
         Log.i("File path", getExternalFilesDir(null).toString())
         val finalQuiz = (application as QuizApplication)
-        val repository = finalQuiz.quizRepository
-        allTopics = repository.getAll()
+        val file = File(getExternalFilesDir(null).toString() + "/questions.json")
+        if (file.exists()) {
+            allTopics = finalQuiz.fileRepository
+            Log.i("I exist", allTopics.toString())
+        }
+        else if (!file.exists()) {
+            val repository = finalQuiz.quizRepository
+            allTopics = repository.getAll()
+            Log.i("I don't exist", allTopics.toString())
+        }
         listView = findViewById(R.id.listView)
         val filePath = this.filesDir.absolutePath
         Log.i("Check files", filePath)
@@ -110,13 +140,14 @@ class MainActivity : AppCompatActivity() {
                         val reader = InputStreamReader(inputStream)
                         reader.use {
                             val text = it.readText()
-                            Log.v("MainActivity", text)
-
                             activityThis.runOnUiThread {
-                                File("/storage/emulated/0/Android/data/edu.uw.ischool.saeid135.quizdroid/files/questions.json").writeText(text)
+                                File(getExternalFilesDir(null).toString() + "/questions.json").writeText(text)
                             }
                         }
                     }
+                    val intent = Intent(activityThis, MainActivity::class.java)
+                    intent.putExtra("Success", getExternalFilesDir(null).toString() + "/questions.json")
+                    startActivity(intent)
                 }
             }
             val filter = IntentFilter(ALARM_ACTION)
@@ -132,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
-            60000,
+            600000,
             pendingIntent)
     }
 
@@ -144,16 +175,19 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.url -> {
-                // Handle the settings action
-                Toast.makeText(this, "http://tednewardsandbox.site44.com/questions.json",
-                    Toast.LENGTH_SHORT).show()
-
+                val intent = Intent(this, Configurations::class.java)
+                checkSet = 1
+                intent.putExtra("newTime", newURL)
+                intent.putExtra("checkSet", checkSet)
+                startActivity(intent)
                 true
             }
             R.id.time -> {
-                // Handle the other action
-                Toast.makeText(this, "Checking for downloads every 5 minutes",
-                    Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, Configurations::class.java)
+                checkSet = 2
+                intent.putExtra("newUrl", newMinutes)
+                intent.putExtra("checkSet", checkSet)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
